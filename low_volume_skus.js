@@ -23,7 +23,7 @@ var CUSTOM_LABEL_NR = '4';
 // above. Name this working sheet 'LowVolume'. Copy the link of the new sheet
 // and paste it below.
 var SPREADSHEET_URL =
-    test'https://docs.google.com/spreadsheets/d/1ipSoiNg3vANswS8U9_JD5KAZP1EhFVyNnN1C63C31l0/edit';
+    'https://docs.google.com/spreadsheets/d/1ipSoiNg3vANswS8U9_JD5KAZP1EhFVyNnN1C63C31l0/edit';
 
 // Set the value for the label for newly flagged low volume products.
 var LABEL_LOW = 'low_clicks_last_30D';
@@ -84,7 +84,8 @@ function getFilteredShoppingProducts(filters, checkLabel) {
   }
   var labelField = ''
   if (checkLabel) {
-    labelField = 'segments.product_custom_attribute' + CUSTOM_LABEL_NR + ', '
+    label = 'segments.product_custom_attribute' + CUSTOM_LABEL_NR
+    labelField = label + ', '
   };
 
   var query = 'SELECT segments.product_item_id, ' + campaignField + labelField +
@@ -101,18 +102,16 @@ function getFilteredShoppingProducts(filters, checkLabel) {
   while (rows.hasNext()) {
     var row = rows.next();
     var clicks = row['metrics.clicks'];
-    var productId = row['segments.product_item_id'] var productCustomlabel =
-        'Test';
+    var productId = row['segments.product_item_id']
 
-    // Label product as low volume, if no clicks (in last 30 days defined at the
-    // top).
+    // Label product as low volume, if below threshold defined above.
     if (clicks < THRESHOLD) {
       products.push([productId, LABEL_LOW]);
       count += 1;
 
       // Label product as ramped up, if it surpasses expected threshold.
     } else if (
-        productCustomlabel == LABEL_LOW && clicks > parseInt(THRESHOLD)) {
+        row[label] == LABEL_LOW && clicks > parseInt(THRESHOLD)) {
       products.push([product_id, LABEL_RAMPED_UP]);
       count += 1;
     }
@@ -140,4 +139,3 @@ function pushToSpreadsheet(data) {
 
   return;
 }
-
