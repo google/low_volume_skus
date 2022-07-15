@@ -26,7 +26,7 @@ var SPREADSHEET_URL =
     'https://docs.google.com/spreadsheets/d/1ipSoiNg3vANswS8U9_JD5KAZP1EhFVyNnN1C63C31l0/edit';
 
 // Set the value for the label for newly flagged low volume products.
-var LABEL_LOW = 'low_clicks_last_30D';
+var LABEL_LOW = 'low_clicks_last_30d';
 
 // Set the value for the label for low volume products that have ramped up.
 var LABEL_RAMPED_UP = 'product_ramped_up';
@@ -112,7 +112,7 @@ function getFilteredShoppingProducts(filters, checkLabel) {
       // Label product as ramped up, if it surpasses expected threshold.
     } else if (
         row[label] == LABEL_LOW && clicks > parseInt(THRESHOLD)) {
-      products.push([product_id, LABEL_RAMPED_UP]);
+      products.push([productId, LABEL_RAMPED_UP]);
       count += 1;
     }
   }
