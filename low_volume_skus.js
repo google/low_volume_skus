@@ -53,6 +53,10 @@ var FILTER_RAMPED_UP = 'metrics.clicks > ' + THRESHOLD +
 var USE_CAMPAIGN_FILTER = false;
 var FILTER_CAMPAIGN_NAME = ' AND campaign.name LIKE "%FR_FR_%" ';
 
+// Google Ads API returns product Id values in lower cases. If your product ID
+// is capitalised please, set following flag to true.
+var PRODUCT_ID_CAPITALISED = false;
+
 // Enter time duration below. Possibilities:
 // TODAY | YESTERDAY | LAST_7_DAYS | LAST_WEEK | LAST_BUSINESS_WEEK |
 // THIS_MONTH | LAST_MONTH | LAST_14_DAYS | LAST_30_DAYS |
@@ -77,7 +81,7 @@ function main() {
 }
 
 function getFilteredShoppingProducts(filters, checkLabel) {
-  var campaignField = ''
+  var campaignField = '';
   if (USE_CAMPAIGN_FILTER) {
     campaignField = 'campaign.name, ';
     filters = filters + FILTER_CAMPAIGN_NAME
@@ -102,7 +106,9 @@ function getFilteredShoppingProducts(filters, checkLabel) {
   while (rows.hasNext()) {
     var row = rows.next();
     var clicks = row['metrics.clicks'];
-    var productId = row['segments.product_item_id']
+    var productId = (PRODUCT_ID_CAPITALISED) ?
+        row['segments.product_item_id'].toUpperCase() :
+        row['segments.product_item_id'];
 
     // Label product as low volume, if below threshold defined above.
     if (clicks < THRESHOLD) {
@@ -110,8 +116,7 @@ function getFilteredShoppingProducts(filters, checkLabel) {
       count += 1;
 
       // Label product as ramped up, if it surpasses expected threshold.
-    } else if (
-        row[label] == LABEL_LOW && clicks > parseInt(THRESHOLD)) {
+    } else if (row[label] == LABEL_LOW && clicks > parseInt(THRESHOLD)) {
       products.push([productId, LABEL_RAMPED_UP]);
       count += 1;
     }
