@@ -29,8 +29,8 @@ can be found in the deck below. *
 4.  **REPLACE** (at least) the variables for: * CUSTOM_LABEL_NR, *
     SPREADSHEET_URL,
 5.  **Check** other variables that you may want to change: * THRESHOLD,
-    USE_CAMPAIGN_FILTER, FILTER_CAMPAIGN_NAME, TIME_DURATION, and/or
-    COUNT_LIMIT.
+    USE_CAMPAIGN_FILTER, FILTER_CAMPAIGN_NAME, PRODUCT_ID_CAPITALISED,
+    TIME_DURATION, and/or COUNT_LIMIT.
 6.  Authorize your script to run in Google Ads Account. 7. Run the script (you
     can also hit preview) and check for potential errors in the execution logs
     or in your spreadsheet.
@@ -47,7 +47,8 @@ are timed correctly so that new labeled product are properly picked up.
 
 1.  If capitalised offer_ids are used - script must be adjusted based on the
 naming convention as Ads API converting offer_id values to lowercase which will
-cause mismatch during supplemental feed processing.
+cause mismatch during supplemental feed processing. Please use PRODUCT_ID_CAPITALISED
+flag to convert offer_id's to upper case.
 
 ## Licensing
 
