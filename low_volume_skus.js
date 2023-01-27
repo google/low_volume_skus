@@ -25,6 +25,8 @@ var CUSTOM_LABEL_NR = '4';
 var SPREADSHEET_URL =
     'https://docs.google.com/spreadsheets/d/1ipSoiNg3vANswS8U9_JD5KAZP1EhFVyNnN1C63C31l0/edit';
 
+var SHEET_NAME = 'LowVolume';
+
 // Set the value for the label for newly flagged low volume products.
 var LABEL_LOW = 'low_clicks_last_30d';
 
@@ -128,7 +130,7 @@ function getFilteredShoppingProducts(filters, checkLabel) {
 
 function pushToSpreadsheet(data) {
   var spreadsheet = SpreadsheetApp.openByUrl(SPREADSHEET_URL);
-  var sheet = spreadsheet.getSheetByName('LowVolume');
+  var sheet = spreadsheet.getSheetByName('SHEET_NAME');
 
   var lastRow = sheet.getMaxRows();
   sheet.getRange('A2:B' + lastRow).clearContent();
