@@ -45,7 +45,7 @@ var FILTER_NO_CLICKS = 'metrics.clicks < ' + THRESHOLD;
 // As a condition, it must have the previously added label and for ex. clicks
 // >50. To add further conditions use the AND clause, e.g. AND Conversions > 10.
 var FILTER_RAMPED_UP = 'metrics.clicks > ' + THRESHOLD +
-    ' AND segments.product_custom_attribute' + CUSTOM_LABEL_NR + ' = "' +
+    ' AND segments.product_custom_attribute' + CUSTOM_LABEL_NR + ' LIKE "' +
     LABEL_LOW + '" ';
 
 // To filter campaign names, add for ex. AND campaign.name LIKE “%FR_FR%”.
@@ -116,7 +116,7 @@ function getFilteredShoppingProducts(filters, checkLabel) {
       count += 1;
 
       // Label product as ramped up, if it surpasses expected threshold.
-    } else if (row[label] == LABEL_LOW && clicks > parseInt(THRESHOLD)) {
+    } else {
       products.push([productId, LABEL_RAMPED_UP]);
       count += 1;
     }
