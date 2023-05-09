@@ -53,6 +53,12 @@ var FILTER_RAMPED_UP = 'metrics.clicks > ' + THRESHOLD +
 var USE_CAMPAIGN_FILTER = false;
 var FILTER_CAMPAIGN_NAME = ' AND campaign.name LIKE "%FR_FR_%" ';
 
+// To filter a Merchant Center account, add "AND segments.product_merchant_id = 1234"
+// Helpful when multiple Merchant Center accounts are under one Google Ads account
+// Set the filter to true to include it.
+var USE_MERCHANT_CENTER_ID_FILTER = false;
+var FILTER_MERCHANT_CENTER_ID = ' AND segments.product_merchant_id = 123456789 ';
+
 // Google Ads API returns product Id values in lower cases. If your product ID
 // is capitalised please, set following flag to true.
 var PRODUCT_ID_CAPITALISED = false;
@@ -86,13 +92,18 @@ function getFilteredShoppingProducts(filters, checkLabel) {
     campaignField = 'campaign.name, ';
     filters = filters + FILTER_CAMPAIGN_NAME
   }
+  var merchantIdField = '';
+  if (USE_MERCHANT_CENTER_ID_FILTER) {
+    merchantIdField = 'segments.product_merchant_id, ';
+    filters = filters + FILTER_MERCHANT_CENTER_ID
+  }
   var labelField = ''
   if (checkLabel) {
     label = 'segments.product_custom_attribute' + CUSTOM_LABEL_NR
     labelField = label + ', '
   };
 
-  var query = 'SELECT segments.product_item_id, ' + campaignField + labelField +
+  var query = 'SELECT segments.product_item_id, ' + campaignField + merchantIdField + labelField +
       'metrics.clicks, metrics.impressions ' +
       'FROM shopping_performance_view WHERE ' + filters +
       ' AND segments.product_item_id != "undefined"' +
