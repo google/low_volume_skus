@@ -18,12 +18,13 @@
 var CUSTOM_LABEL_NR = '4';
 
 // Create a new Google spreadsheet.
+// Replace the URL below with the newly created one (or replace the ID).
 // Add these values to A1 and B1 respectively:
 // A1 = 'id', B1 = 'custom_label4' - the nr of the custom label should match the
 // above. Name this working sheet 'LowVolume'. Copy the link of the new sheet
 // and paste it below.
 var SPREADSHEET_URL =
-    'https://docs.google.com/spreadsheets/d/1ipSoiNg3vANswS8U9_JD5KAZP1EhFVyNnN1C63C31l0/edit';
+    'https://docs.google.com/spreadsheets/d/SPREADSHEET_ID';
 
 // Set the value for the label for newly flagged low volume products.
 var LABEL_LOW = 'low_clicks_last_30d';
